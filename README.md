@@ -20,3 +20,9 @@ If some of the project is large enough, or it is so useful and original, I will 
 
 ### Sort by my preference :)
 
+## Naming Convention 
+
+`<id>/<project_name>` where id is composed of 2 parts: `<language_short_name>_<topic_id>` 
+
+example: 
+`minigrep` has project id of p01, then `rust` implementation will be named as `rs_p01/minigrep`
