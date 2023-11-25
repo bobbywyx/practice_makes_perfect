@@ -6,4 +6,10 @@ This mini grep tool is implemented in Rust. Inspired by [rust course](https://co
 
 ## Usage
 
+
+example:
+```bash
+cargo run -- a poem.txt
+```
+
 ## Dependencies
