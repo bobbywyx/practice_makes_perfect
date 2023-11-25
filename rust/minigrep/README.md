@@ -9,7 +9,7 @@ This mini grep tool is implemented in Rust. Inspired by [rust course](https://co
 
 example:
 ```bash
-cargo run -- a poem.txt
+cargo run -- are poem.txt
 ```
 
 ## Dependencies
