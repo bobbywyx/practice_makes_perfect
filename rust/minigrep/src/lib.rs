@@ -13,7 +13,7 @@ impl Config {
 
         let query = args.next().expect("Failed to read query");
         let file_path = args.next().expect("Failed to get file path");
-        let ignore_case = env::var("IGNORE_CASE").is_ok();
+        let ignore_case = env::var("IGNORE_CASE").is_ok() || args.next().is_some_and(|s| s == "i");
 
         Ok(Config { query, file_path, ignore_case })
     }
@@ -26,7 +26,11 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     println!("In file {}", config.file_path);
     println!("Results:");
 
-    let results = search(&config.query, &contents);
+    let results =
+        if config.ignore_case
+            { search_case_insensitive(&config.query, &contents) }
+        else
+            { search(&config.query, &contents) };
 
     for line in results {
         println!("{}", line);
