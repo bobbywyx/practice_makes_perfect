@@ -8,6 +8,7 @@ use std::{
     error::Error,
     io::{self},
 };
+use crossterm::event::KeyEventKind::Repeat;
 
 pub fn run() -> Result<(), Box<dyn Error>> {
     init_terminal()?;
@@ -15,9 +16,9 @@ pub fn run() -> Result<(), Box<dyn Error>> {
     loop {
         let event = read()?;
         if let Event::Key(key_event) = event {
-            // println!("{:?}", event);
+            println!("{:?}\r", event);
             if let KeyCode::Char(c) = key_event.code {
-                println!("{}", c);
+                println!("{}\r", c);
                 if c == 'q' {
                     break;
                 }
