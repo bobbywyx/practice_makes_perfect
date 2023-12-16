@@ -1,4 +1,5 @@
 use editor::Editor;
+mod renderer;
 
 fn main() {
     if let Err(e) = Editor::new().run() {
