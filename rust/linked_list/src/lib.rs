@@ -1,0 +1,7 @@
+struct LinkedList{
+    
+}
+
+impl LinkedList {
+
+}
