@@ -4,6 +4,7 @@ use crossterm::{
     execute,
     terminal::{Clear, ClearType, SetTitle},
 };
+use renderer::Renderer;
 use std::{
     error::Error,
     io::{self},
@@ -14,14 +15,16 @@ mod renderer;
 
 pub struct Editor {
     should_quit: bool,
+    renderer: Renderer,
 }
 impl Editor {
     pub fn new() -> Self {
-        Self { should_quit: false }
+        Self { should_quit: false , renderer: Renderer::new()}
     }
 
     pub fn run(&mut self) -> Result<(), Box<dyn Error>> {
         init_terminal()?;
+        self.renderer.draw_tildes().display_welcome_msg();
 
         loop {
             if crossterm::event::poll(Duration::from_millis(10))? {
@@ -38,9 +41,9 @@ impl Editor {
     }
 
     fn handle_event(&mut self, e: Event) -> Result<(), Box<dyn Error>> {
-
         if let Event::Key(key_event) = e {
             if key_event.modifiers.is_empty() {
+                // println!("{:?}",e);
                 // no modifiers
                 if let KeyCode::Char(c) = key_event.code {
                     match key_event.kind {
@@ -51,13 +54,15 @@ impl Editor {
                             match c {
                                 'q' => self.should_quit = true,
                                 'r' => refresh_terminal()?,
-                                'd' => renderer::Renderer::draw_tildes(),
+                                'd' => self.renderer.draw_tildes().display_welcome_msg(),
                                 _ => (),
                             }
                         }
                         KeyEventKind::Release => (),
                         KeyEventKind::Repeat => (),
                     }
+                } else if let KeyCode::Enter = key_event.code {
+                    println!("\r");
                 }
             }
             if key_event.modifiers.contains(KeyModifiers::CONTROL) {
